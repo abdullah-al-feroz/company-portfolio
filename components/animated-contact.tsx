@@ -13,7 +13,7 @@ const contactInfo = [
   {
     icon: Mail,
     title: "Email",
-    value: "hello@zenbyte.com",
+    value: "zenbytesolutionsbd@gmail.com",
     description: "Drop us a line anytime",
     color: "bg-blue-500",
   },
