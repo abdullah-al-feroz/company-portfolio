@@ -17,7 +17,13 @@ export function Footer() {
             <div className="flex space-x-4">
               <Github className="h-5 w-5 text-gray-400 hover:text-white cursor-pointer transition-colors" />
               <Linkedin className="h-5 w-5 text-gray-400 hover:text-white cursor-pointer transition-colors" />
-              <Twitter className="h-5 w-5 text-gray-400 hover:text-white cursor-pointer transition-colors" />
+              <a
+                href="https://x.com/ZenbyteSolution"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Twitter className="h-5 w-5 text-gray-400 hover:text-white cursor-pointer transition-colors" />
+              </a>
             </div>
           </div>
 
