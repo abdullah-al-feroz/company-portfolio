@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { ExternalLink, Github, Eye, Star, Calendar, Users, Zap } from "lucide-react"
 import Image from "next/image"
 import { useState } from "react"
+import Link from "next/link"
 
 const portfolioCategories = ["All", "Web Apps", "Mobile Apps", "E-commerce", "SaaS", "AI/ML"]
 
@@ -192,11 +193,10 @@ export function AnimatedPortfolio() {
           {portfolioCategories.map((category, index) => (
             <motion.button
               key={category}
-              className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
-                activeCategory === category
-                  ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg"
-                  : "bg-white/80 backdrop-blur-sm text-gray-700 hover:bg-white hover:shadow-md border border-gray-200"
-              }`}
+              className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${activeCategory === category
+                ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg"
+                : "bg-white/80 backdrop-blur-sm text-gray-700 hover:bg-white hover:shadow-md border border-gray-200"
+                }`}
               onClick={() => setActiveCategory(category)}
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -263,7 +263,9 @@ export function AnimatedPortfolio() {
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
                           >
-                            <ExternalLink className="w-4 h-4 text-gray-700" />
+                            <Link href={`/project/${item.id}`}>
+                              <ExternalLink className="w-4 h-4 text-gray-700" />
+                            </Link>
                           </motion.button>
                           <motion.button
                             className="p-2 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-colors"
@@ -375,13 +377,15 @@ export function AnimatedPortfolio() {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    <Button
-                      className={`w-full bg-gradient-to-r ${item.color} hover:opacity-90 text-white shadow-md hover:shadow-lg transition-all duration-300`}
-                      size="sm"
-                    >
-                      <Eye className="w-4 h-4 mr-2" />
-                      View Details
-                    </Button>
+                    <Link href={`/project/${item.id}`}>
+                      <Button
+                        className={`w-full bg-gradient-to-r ${item.color} hover:opacity-90 text-white shadow-md hover:shadow-lg transition-all duration-300`}
+                        size="sm"
+                      >
+                        <Eye className="w-4 h-4 mr-2" />
+                        View Details
+                      </Button>
+                    </Link>
                   </motion.div>
                 </CardContent>
               </Card>
