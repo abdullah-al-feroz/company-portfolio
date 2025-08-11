@@ -224,22 +224,16 @@ export function AnimatedHero() {
                   <div className="absolute bottom-6 left-6 right-6">
                     <motion.div
                       className="bg-white/90 backdrop-blur-sm rounded-lg p-4"
-                      initial={{ y: 20, opacity: 0 }}
-                      whileHover={{ y: 0, opacity: 1 }}
-                      transition={{ duration: 0.3 }}
+                      initial={{ y: 0, opacity: 1 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      whileHover={{ y: -5, opacity: 1 }}
                     >
                       <p className="text-sm font-medium text-gray-800 mb-2">Technologies We Use:</p>
-                      <div className="flex space-x-2">
-                        {["React", "Next.js", "Node.js", "Python", "AWS"].map((tech, index) => (
-                          <motion.span
-                            key={tech}
-                            className="px-2 py-1 bg-emerald-100 text-emerald-700 text-xs rounded-full"
-                            initial={{ scale: 0 }}
-                            whileHover={{ scale: 1 }}
-                            transition={{ duration: 0.2, delay: index * 0.1 }}
-                          >
+                      <div className="flex flex-wrap gap-2">
+                        {["React", "Next.js", "Node.js", "Python", "AWS"].map((tech) => (
+                          <span className="px-3 py-1 bg-emerald-100 text-emerald-700 text-xs rounded-full font-medium">
                             {tech}
-                          </motion.span>
+                          </span>
                         ))}
                       </div>
                     </motion.div>
