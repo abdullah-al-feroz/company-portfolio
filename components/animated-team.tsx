@@ -30,7 +30,7 @@ const team = [
     image: "/rashed.jpeg",
     bio: "UI/UX focused developer specializing in React, Next.js, and modern frontend technologies.",
     github: "https://github.com/rashed-sarder-xeon",
-    linkedin: "https://www.linkedin.com/in/rashed-sarder13/",
+    linkedin: "https://github.com/rashedsarder13",
     twitter: "https://twitter.com/michaelrodriguez",
   },
   {
