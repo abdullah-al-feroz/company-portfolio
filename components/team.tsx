@@ -16,7 +16,7 @@ const team = [
     bio: "Expert in cloud architecture and distributed systems with a passion for innovative solutions.",
   },
   {
-    name: "Michael Rodriguez",
+    name: "Rashed Sarder",
     role: "Senior Frontend Developer",
     image: "/placeholder-fdxel.png",
     bio: "UI/UX focused developer specializing in React, Next.js, and modern frontend technologies.",

@@ -11,24 +11,36 @@ const team = [
     role: "CEO & Lead Developer",
     image: "/testimonial-avatar-4.png",
     bio: "Full-stack developer with 8+ years of experience in building scalable web applications.",
+    github: "https://github.com/alexchen",
+    linkedin: "https://linkedin.com/in/alexchen",
+    twitter: "https://twitter.com/alexchen",
   },
   {
     name: "Sarah Johnson",
     role: "CTO & System Architect",
     image: "/placeholder-jom6f.png",
     bio: "Expert in cloud architecture and distributed systems with a passion for innovative solutions.",
+    github: "https://github.com/sarahjohnson",
+    linkedin: "https://linkedin.com/in/sarahjohnson",
+    twitter: "https://twitter.com/sarahjohnson",
   },
   {
-    name: "Michael Rodriguez",
+    name: "Rashed Sarder",
     role: "Senior Frontend Developer",
-    image: "/placeholder-fdxel.png",
+    image: "/rashed.jpeg",
     bio: "UI/UX focused developer specializing in React, Next.js, and modern frontend technologies.",
+    github: "https://github.com/rashed-sarder-xeon",
+    linkedin: "https://www.linkedin.com/in/rashed-sarder13/",
+    twitter: "https://twitter.com/michaelrodriguez",
   },
   {
     name: "Emily Davis",
     role: "Mobile App Developer",
     image: "/placeholder-1gwa5.png",
     bio: "Cross-platform mobile development expert with expertise in React Native and Flutter.",
+    github: "https://github.com/emilydavis",
+    linkedin: "https://linkedin.com/in/emilydavis",
+    twitter: "https://twitter.com/emilydavis",
   },
 ]
 
@@ -170,9 +182,16 @@ export function AnimatedTeam() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.6 + index * 0.1 }}
                   >
-                    {[Github, Linkedin, Twitter].map((Icon, iconIndex) => (
-                      <motion.div
+                    {[
+                      { Icon: Github, url: member.github },
+                      { Icon: Linkedin, url: member.linkedin },
+                      { Icon: Twitter, url: member.twitter },
+                    ].map(({ Icon, url }, iconIndex) => (
+                      <motion.a
                         key={iconIndex}
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         whileHover={{
                           scale: 1.3,
                           rotate: 360,
@@ -181,7 +200,7 @@ export function AnimatedTeam() {
                         transition={{ duration: 0.3 }}
                       >
                         <Icon className="h-5 w-5 text-gray-400 hover:text-gray-600 cursor-pointer transition-colors" />
-                      </motion.div>
+                      </motion.a>
                     ))}
                   </motion.div>
                 </CardContent>
