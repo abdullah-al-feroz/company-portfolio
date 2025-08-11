@@ -166,7 +166,7 @@ export function AnimatedAbout() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <div className="relative">
+            <div className="relative overflow-visible p-12">
               {/* Main Image */}
               <motion.div className="relative z-10" whileHover={{ scale: 1.02 }} transition={{ duration: 0.6 }}>
                 <motion.div
@@ -190,21 +190,25 @@ export function AnimatedAbout() {
                 </motion.div>
               </motion.div>
 
-              {/* Floating Stats Cards */}
               <motion.div
-                className="absolute -top-6 -right-6 bg-white p-6 rounded-2xl shadow-xl border border-gray-100"
-                initial={{ opacity: 0, scale: 0 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                className="absolute -top-4 -right-4 bg-white p-6 rounded-2xl shadow-2xl border border-gray-100 z-30"
+                initial={{ opacity: 0, scale: 0, y: -20 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.5 }}
                 whileHover={{
-                  scale: 1.05,
+                  scale: 1.1,
                   rotate: 5,
+                  boxShadow: "0 20px 40px -12px rgba(16, 185, 129, 0.4)",
+                }}
+                style={{
+                  zIndex: 30,
+                  filter: "drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15))",
                 }}
               >
                 <div className="text-center">
                   <motion.div
-                    className="text-3xl font-bold text-emerald-600"
+                    className="text-4xl font-bold text-emerald-600"
                     animate={{
                       scale: [1, 1.1, 1],
                     }}
@@ -212,25 +216,30 @@ export function AnimatedAbout() {
                   >
                     5+
                   </motion.div>
-                  <div className="text-sm text-gray-600 font-medium">Years</div>
+                  <div className="text-sm text-gray-700 font-semibold">Years</div>
                   <div className="text-xs text-gray-500">Experience</div>
                 </div>
               </motion.div>
 
               <motion.div
-                className="absolute -bottom-8 -left-8 bg-gradient-to-r from-blue-500 to-purple-600 p-6 rounded-2xl shadow-xl text-white"
-                initial={{ opacity: 0, scale: 0 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                className="absolute -bottom-6 -left-6 bg-gradient-to-r from-blue-500 to-purple-600 p-6 rounded-2xl shadow-2xl text-white z-30"
+                initial={{ opacity: 0, scale: 0, y: 20 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.7 }}
                 whileHover={{
-                  scale: 1.05,
+                  scale: 1.1,
                   rotate: -5,
+                  boxShadow: "0 20px 40px -12px rgba(59, 130, 246, 0.4)",
+                }}
+                style={{
+                  zIndex: 30,
+                  filter: "drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15))",
                 }}
               >
                 <div className="text-center">
                   <motion.div
-                    className="text-3xl font-bold"
+                    className="text-4xl font-bold"
                     animate={{
                       textShadow: [
                         "0 0 0px rgba(255, 255, 255, 0)",
@@ -242,8 +251,8 @@ export function AnimatedAbout() {
                   >
                     98%
                   </motion.div>
-                  <div className="text-sm font-medium opacity-90">Client</div>
-                  <div className="text-xs opacity-75">Satisfaction</div>
+                  <div className="text-sm font-semibold opacity-95">Client</div>
+                  <div className="text-xs opacity-80">Satisfaction</div>
                 </div>
               </motion.div>
             </div>
