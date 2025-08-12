@@ -7,26 +7,18 @@ import Image from "next/image"
 
 const team = [
   {
-    name: "Alex Chen",
-    role: "CEO & Lead Developer",
-    image: "/testimonial-avatar-4.png",
-    bio: "Full-stack developer with 8+ years of experience in building scalable web applications.",
-    github: "https://github.com/alexchen",
-    linkedin: "https://linkedin.com/in/alexchen",
-    twitter: "https://twitter.com/alexchen",
-  },
-  {
-    name: "Sarah Johnson",
-    role: "CTO & System Architect",
-    image: "/placeholder-jom6f.png",
-    bio: "Expert in cloud architecture and distributed systems with a passion for innovative solutions.",
-    github: "https://github.com/sarahjohnson",
-    linkedin: "https://linkedin.com/in/sarahjohnson",
-    twitter: "https://twitter.com/sarahjohnson",
+    name: "Abdullah-Al Firoz",
+    role: "CEO & Senior Software Engineer",
+    image: "/firoz.jpg",
+    // bio: "Full-stack developer with 8+ years of experience in building scalable web applications.",
+    bio: "Full-stack developer focused on building scalable web applications.",
+    github: "https://github.com/abdullah-al-feroz",
+    linkedin: "https://www.linkedin.com/in/abdullah-al-firoz/",
+    twitter: "https://x.com/Engineer_Feroz",
   },
   {
     name: "Rashed Sarder",
-    role: "Senior Frontend Developer",
+    role: "Senior Software Engineer",
     image: "/rashed.jpeg",
     bio: "UI/UX focused developer specializing in React, Next.js, and modern frontend technologies.",
     github: "https://github.com/rashed-sarder-xeon",
@@ -34,14 +26,23 @@ const team = [
     twitter: "https://twitter.com/michaelrodriguez",
   },
   {
-    name: "Emily Davis",
-    role: "Mobile App Developer",
-    image: "/placeholder-1gwa5.png",
-    bio: "Cross-platform mobile development expert with expertise in React Native and Flutter.",
+    name: "Tanvir Faysal",
+    role: "Senior Software Engineer",
+    image: "/faysal.png",
+    bio: "Cross-platform mobile development expert with expertise in React Native.",
+    github: "https://github.com/tanvirfaysal11",
+    linkedin: "https://www.linkedin.com/in/tanvir-faysal-tf11/",
+    twitter: "https://x.com/mtanvirfaysal",
+  },
+  {
+    name: "Rejvan Razin",
+    role: "Software Engineer",
+    image: "/razin.png",
+    bio: "Software Engineer with a UI/UX focus, specializing in PHP.",
     github: "https://github.com/emilydavis",
     linkedin: "https://linkedin.com/in/emilydavis",
     twitter: "https://twitter.com/emilydavis",
-  },
+  }
 ]
 
 const containerVariants = {
