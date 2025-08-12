@@ -1,5 +1,7 @@
 "use client"
 
+import type React from "react"
+
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -7,7 +9,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
-import { Mail, Phone, MapPin, Clock, Send, MessageCircle, Calendar, Globe } from "lucide-react"
+import { Mail, Phone, MapPin, Send, MessageCircle, Calendar, Globe, CheckCircle, AlertCircle } from "lucide-react"
+import { useState } from "react"
 
 const contactInfo = [
   {
@@ -42,9 +45,71 @@ const contactInfo = [
 
 const projectTypes = ["Web Application", "Mobile App", "E-commerce", "API Development", "Cloud Migration", "Other"]
 
-const budgetRanges = ["$5K - $10K", "$10K - $25K", "$25K - $50K", "$50K - $100K", "$100K+"]
-
 export function AnimatedContact() {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    company: "",
+    projectType: "",
+    message: "",
+  })
+
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle")
+  const [statusMessage, setStatusMessage] = useState("")
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    setSubmitStatus("idle")
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const result = await response.json()
+
+      if (response.ok) {
+        setSubmitStatus("success")
+        setStatusMessage(result.message)
+        // Reset form
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          company: "",
+          projectType: "",
+          message: "",
+        })
+      } else {
+        setSubmitStatus("error")
+        setStatusMessage(result.error || "Something went wrong. Please try again.")
+      }
+    } catch (error) {
+      setSubmitStatus("error")
+      setStatusMessage("Network error. Please check your connection and try again.")
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { id, value } = e.target
+    setFormData((prev) => ({ ...prev, [id]: value }))
+  }
+
+  const handleProjectTypeSelect = (type: string) => {
+    setFormData((prev) => ({ ...prev, projectType: type }))
+  }
+
   return (
     <section id="contact" className="py-16 sm:py-20 lg:py-24 relative overflow-hidden">
       {/* Animated Background */}
@@ -177,13 +242,13 @@ export function AnimatedContact() {
                       scale: 1.02,
                       x: 10,
                     }}
-                    className="group"
+                    className="group h-full"
                   >
-                    <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-white/80 backdrop-blur-sm overflow-hidden">
-                      <CardContent className="p-6">
-                        <div className="flex items-start space-x-4">
+                    <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-white/80 backdrop-blur-sm overflow-hidden h-full">
+                      <CardContent className="p-6 h-full flex items-center">
+                        <div className="flex items-center space-x-4 w-full">
                           <motion.div
-                            className={`w-12 h-12 ${info.color} rounded-xl flex items-center justify-center relative overflow-hidden`}
+                            className={`w-12 h-12 ${info.color} rounded-xl flex items-center justify-center relative overflow-hidden flex-shrink-0`}
                             whileHover={{
                               rotate: 360,
                               scale: 1.1,
@@ -198,12 +263,12 @@ export function AnimatedContact() {
                             />
                             <info.icon className="h-6 w-6 text-white relative z-10" />
                           </motion.div>
-                          <div className="flex-1">
-                            <h4 className="font-semibold text-gray-900 group-hover:text-emerald-600 transition-colors">
+                          <div className="flex-1 min-w-0">
+                            <h4 className="font-semibold text-gray-900 group-hover:text-emerald-600 transition-colors text-lg">
                               {info.title}
                             </h4>
-                            <p className="text-gray-800 font-medium">{info.value}</p>
-                            <p className="text-sm text-gray-500 mt-1">{info.description}</p>
+                            <p className="text-gray-800 font-medium text-base truncate">{info.value}</p>
+                            <p className="text-sm text-gray-500 mt-1 leading-tight">{info.description}</p>
                           </div>
                         </div>
                       </CardContent>
@@ -282,14 +347,14 @@ export function AnimatedContact() {
                 />
 
                 <CardHeader className="pb-6">
-                  <CardTitle className="text-3xl font-bold text-gray-900 flex items-center">
+                  <CardTitle className="text-2xl font-bold text-gray-900 flex items-center">
                     <Calendar className="w-8 h-8 mr-3 text-emerald-600" />
                     Start Your Project
                   </CardTitle>
                   <p className="text-gray-600 mt-2">Tell us about your vision and we'll bring it to life</p>
                 </CardHeader>
 
-                <CardContent className="space-y-6">
+                <CardContent className="space-y-6 flex-1">
                   {/* Personal Information */}
                   <div className="grid sm:grid-cols-2 gap-4">
                     {[
@@ -310,8 +375,11 @@ export function AnimatedContact() {
                         <motion.div whileFocus={{ scale: 1.02 }} transition={{ duration: 0.2 }}>
                           <Input
                             id={field.id}
+                            value={formData[field.id as keyof typeof formData]}
+                            onChange={handleInputChange}
                             placeholder={field.placeholder}
                             className="border-gray-200 focus:border-emerald-500 focus:ring-emerald-500 transition-all duration-300"
+                            required
                           />
                         </motion.div>
                       </motion.div>
@@ -339,8 +407,11 @@ export function AnimatedContact() {
                           <Input
                             id={field.id}
                             type={field.type}
+                            value={formData[field.id as keyof typeof formData]}
+                            onChange={handleInputChange}
                             placeholder={field.placeholder}
                             className="border-gray-200 focus:border-emerald-500 focus:ring-emerald-500 transition-all duration-300"
+                            required={field.id === "email"}
                           />
                         </motion.div>
                       </motion.div>
@@ -361,6 +432,8 @@ export function AnimatedContact() {
                     <motion.div whileFocus={{ scale: 1.02 }} transition={{ duration: 0.2 }}>
                       <Input
                         id="company"
+                        value={formData.company}
+                        onChange={handleInputChange}
                         placeholder="Your Company"
                         className="border-gray-200 focus:border-emerald-500 focus:ring-emerald-500 transition-all duration-300"
                       />
@@ -389,40 +462,13 @@ export function AnimatedContact() {
                         >
                           <Badge
                             variant="outline"
-                            className="cursor-pointer hover:bg-emerald-50 hover:border-emerald-300 hover:text-emerald-700 transition-all duration-300"
+                            className={`cursor-pointer transition-all duration-300 ${formData.projectType === type
+                                ? "bg-emerald-100 border-emerald-500 text-emerald-700"
+                                : "hover:bg-emerald-50 hover:border-emerald-300 hover:text-emerald-700"
+                              }`}
+                            onClick={() => handleProjectTypeSelect(type)}
                           >
                             {type}
-                          </Badge>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </motion.div>
-
-                  {/* Budget Range */}
-                  <motion.div
-                    className="space-y-3"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 1 }}
-                  >
-                    <Label className="text-sm font-medium text-gray-700">Budget Range</Label>
-                    <div className="flex flex-wrap gap-2">
-                      {budgetRanges.map((range, index) => (
-                        <motion.div
-                          key={range}
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          whileInView={{ opacity: 1, scale: 1 }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 0.4, delay: 1.1 + index * 0.05 }}
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          <Badge
-                            variant="outline"
-                            className="cursor-pointer hover:bg-blue-50 hover:border-blue-300 hover:text-blue-700 transition-all duration-300"
-                          >
-                            {range}
                           </Badge>
                         </motion.div>
                       ))}
@@ -435,7 +481,7 @@ export function AnimatedContact() {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 1.2 }}
+                    transition={{ duration: 0.6, delay: 1.0 }}
                   >
                     <Label htmlFor="message" className="text-sm font-medium text-gray-700">
                       Project Details
@@ -443,23 +489,49 @@ export function AnimatedContact() {
                     <motion.div whileFocus={{ scale: 1.01 }} transition={{ duration: 0.2 }}>
                       <Textarea
                         id="message"
+                        value={formData.message}
+                        onChange={handleInputChange}
                         placeholder="Tell us about your project requirements, goals, timeline, and any specific features you have in mind..."
                         rows={5}
                         className="border-gray-200 focus:border-emerald-500 focus:ring-emerald-500 transition-all duration-300 resize-none"
+                        required
                       />
                     </motion.div>
                   </motion.div>
+
+                  {submitStatus !== "idle" && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className={`p-4 rounded-lg flex items-center space-x-2 ${submitStatus === "success"
+                          ? "bg-green-50 text-green-700 border border-green-200"
+                          : "bg-red-50 text-red-700 border border-red-200"
+                        }`}
+                    >
+                      {submitStatus === "success" ? (
+                        <CheckCircle className="w-5 h-5" />
+                      ) : (
+                        <AlertCircle className="w-5 h-5" />
+                      )}
+                      <span>{statusMessage}</span>
+                    </motion.div>
+                  )}
 
                   {/* Submit Button */}
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 1.3 }}
+                    transition={{ duration: 0.6, delay: 1.1 }}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    <Button className="w-full bg-gradient-to-r from-emerald-600 to-blue-600 hover:from-emerald-700 hover:to-blue-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 group">
+                    <Button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full bg-gradient-to-r from-emerald-600 to-blue-600 hover:from-emerald-700 hover:to-blue-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 group disabled:opacity-50 disabled:cursor-not-allowed"
+                      onClick={handleSubmit}
+                    >
                       <motion.span
                         className="flex items-center justify-center"
                         animate={{
@@ -471,7 +543,7 @@ export function AnimatedContact() {
                         }}
                         transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
                       >
-                        Send Message
+                        {isSubmitting ? "Sending..." : "Send Message"}
                         <motion.div
                           className="ml-2"
                           animate={{ x: [0, 5, 0] }}
@@ -481,18 +553,6 @@ export function AnimatedContact() {
                         </motion.div>
                       </motion.span>
                     </Button>
-                  </motion.div>
-
-                  {/* Response Time Notice */}
-                  <motion.div
-                    className="text-center text-sm text-gray-500 bg-gray-50 rounded-lg p-3"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 1.4 }}
-                  >
-                    <Clock className="w-4 h-4 inline mr-2" />
-                    We typically respond within 24 hours
                   </motion.div>
                 </CardContent>
               </Card>
