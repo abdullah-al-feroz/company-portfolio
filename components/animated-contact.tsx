@@ -27,7 +27,7 @@ const contactInfo = [
   {
     icon: MapPin,
     title: "Office",
-    value: "San Francisco, CA",
+    value: "Dhaka, Bangladesh",
     description: "Come say hello at our HQ",
     color: "bg-purple-500",
   },

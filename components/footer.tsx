@@ -84,7 +84,7 @@ export function Footer() {
             <ul className="space-y-2 text-gray-400">
               <li>zenbytesolutionsbd@gmail.com</li>
               <li>+1 (555) 123-4567</li>
-              <li>San Francisco, CA</li>
+              <li>Dhaka, Bangladesh</li>
               <li>Mon-Fri 9AM-6PM PST</li>
             </ul>
           </div>
