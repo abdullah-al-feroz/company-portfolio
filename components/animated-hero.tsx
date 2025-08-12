@@ -230,7 +230,7 @@ export function AnimatedHero() {
                     >
                       <p className="text-sm font-medium text-gray-800 mb-2">Technologies We Use:</p>
                       <div className="flex flex-wrap gap-2">
-                        {["React", "Next.js", "Node.js", "Python", "AWS"].map((tech) => (
+                        {["React", "Next.js", "Node.js", "Python", "C#", "Azure", "AWS"].map((tech) => (
                           <span className="px-3 py-1 bg-emerald-100 text-emerald-700 text-xs rounded-full font-medium">
                             {tech}
                           </span>
