@@ -9,7 +9,7 @@ const team = [
   {
     name: "Abdullah-Al Firoz",
     role: "CEO & Senior Software Engineer",
-    image: "/firoz.jpg",
+    image: "/firoz.png",
     // bio: "Full-stack developer with 8+ years of experience in building scalable web applications.",
     bio: "Full-stack developer focused on building scalable web applications.",
     github: "https://github.com/abdullah-al-feroz",
