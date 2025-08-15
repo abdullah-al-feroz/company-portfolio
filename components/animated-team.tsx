@@ -23,7 +23,7 @@ const team = [
     bio: "UI/UX focused developer specializing in React, Next.js, and modern frontend technologies.",
     github: "https://github.com/rashed-sarder-xeon",
     linkedin: "https://github.com/rashedsarder13",
-    twitter: "https://twitter.com/michaelrodriguez",
+    twitter: "https://x.com/rashedsarder13",
   },
   {
     name: "Tanvir Faysal",
