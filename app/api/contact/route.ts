@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Missing fields" }, { status: 400 });
     }
 
-    const emailMessage = {
+    const businessEmail = {
       to: BUSINESS_EMAIL,
       from: FROM_EMAIL,
       replyTo: email,
@@ -34,12 +34,31 @@ export async function POST(request: NextRequest) {
       // bcc: "bcc@example.com",
     };
 
-    const [sgResponse] = await sgMail.send(emailMessage);
+    // 2. Thank-you email to client
+    const thankYouEmail = {
+      to: email,
+      from: FROM_EMAIL,
+      subject: `Thank you for contacting us, ${firstName + " "+ lastName}!`,
+      text: `Hi ${firstName},\n\nThank you for your message. We'll get back to you soon.\n\nBest regards,\nThe Team`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #2563eb;">Hi ${firstName + " "+ lastName},</h2>
+          <p>Thank you for contacting us! We've received your message and will get back to you within 24-48 hours.</p>
+          <p>Here's what you sent us:</p>
+          <blockquote style="border-left: 4px solid #ddd; padding-left: 1rem; margin-left: 0;">
+            ${message.replace(/\n/g, '<br>')}
+          </blockquote>
+          <p>Best regards,<br>The Team</p>
+        </div>
+      `
+    };
+
+    const [sgResponse] = await sgMail.send([businessEmail, thankYouEmail]);
 
     return NextResponse.json(
       {
         success: true,
-        message: "Email queued",
+        message: "Emails sent successfully!",
         sendGridStatus: sgResponse.statusCode,
       },
       { status: 200 }
