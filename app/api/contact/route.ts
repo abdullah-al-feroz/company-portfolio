@@ -1,14 +1,22 @@
 import { type NextRequest, NextResponse } from "next/server";
 import sgMail from "@sendgrid/mail";
 
-const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY?.trim() || "";
-const FROM_EMAIL = process.env.FROM_EMAIL!;
-const BUSINESS_EMAIL = process.env.BUSINESS_EMAIL!;
+const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY?.trim();
+const FROM_EMAIL = process.env.FROM_EMAIL?.trim();
+const BUSINESS_EMAIL = process.env.BUSINESS_EMAIL?.trim();
 
-sgMail.setApiKey(SENDGRID_API_KEY);
+sgMail.setApiKey(SENDGRID_API_KEY || "");
 
 export async function POST(request: NextRequest) {
   try {
+    if (!SENDGRID_API_KEY || !FROM_EMAIL || !BUSINESS_EMAIL) {
+      console.error("Environment variables missing");
+      return NextResponse.json(
+        { error: "Email environment variables are not set" },
+        { status: 500 }
+      );
+    }
+
     const body = await request.json();
     const { firstName, lastName, email, message } = body;
 
@@ -22,9 +30,11 @@ export async function POST(request: NextRequest) {
       replyTo: email,
       subject: `New message from ${firstName} ${lastName}`,
       text: message,
+      // Optional: Add CC or BCC if needed
+      // cc: "cc@example.com",
+      // bcc: "bcc@example.com",
     };
 
-    // ✅ actually send the email
     const [sgResponse] = await sgMail.send(emailMessage);
 
     return NextResponse.json(
