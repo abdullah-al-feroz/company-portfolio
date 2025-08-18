@@ -30,7 +30,6 @@ export async function POST(request: NextRequest) {
       replyTo: email,
       subject: `New message from ${firstName} ${lastName}`,
       text: message,
-      // Optional: Add CC or BCC if needed
       // cc: "cc@example.com",
       // bcc: "bcc@example.com",
     };
