@@ -16,7 +16,6 @@ export function Contact() {
             life
           </p>
         </div>
-
         <div className="grid lg:grid-cols-2 gap-12">
           <div className="space-y-8">
             <div className="grid sm:grid-cols-2 gap-6">
