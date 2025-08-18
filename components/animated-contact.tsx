@@ -23,7 +23,7 @@ const contactInfo = [
   {
     icon: Phone,
     title: "Phone",
-    value: "+1 (555) 123-4567",
+    value: "+88 017xxxxxx",
     description: "Mon-Fri from 8am to 5pm",
     color: "bg-green-500",
   },
@@ -65,20 +65,43 @@ export function AnimatedContact() {
     setIsSubmitting(true)
     setSubmitStatus("idle")
 
+    if (!formData.firstName || !formData.lastName || !formData.email || !formData.message) {
+      setSubmitStatus("error")
+      setStatusMessage("Please fill in all required fields (Name, Email, and Message)")
+      setIsSubmitting(false)
+      return
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(formData.email)) {
+      setSubmitStatus("error")
+      setStatusMessage("Please enter a valid email address")
+      setIsSubmitting(false)
+      return
+    }
+
     try {
+      debugger
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
-      })
+      });
 
-      const result = await response.json()
+      let result: any = {};
+      const contentType = response.headers.get("content-type");
+
+      if (contentType && contentType.includes("application/json")) {
+        result = await response.json();
+      } else {
+        result = { error: await response.text() }; // fallback for HTML/text errors
+      }
 
       if (response.ok) {
-        setSubmitStatus("success")
-        setStatusMessage(result.message)
+        setSubmitStatus("success");
+        setStatusMessage(result.message || "Message sent successfully!");
         // Reset form
         setFormData({
           firstName: "",
@@ -88,16 +111,19 @@ export function AnimatedContact() {
           company: "",
           projectType: "",
           message: "",
-        })
+        });
       } else {
-        setSubmitStatus("error")
-        setStatusMessage(result.error || "Something went wrong. Please try again.")
+        setSubmitStatus("error");
+        setStatusMessage(
+          result.error || `Server error (${response.status}): ${result.details || "Please try again"}`
+        );
       }
     } catch (error) {
-      setSubmitStatus("error")
-      setStatusMessage("Network error. Please check your connection and try again.")
+      console.error("Network error:", error);
+      setSubmitStatus("error");
+      setStatusMessage("Network error. Please check your connection and try again.");
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
   }
 
@@ -463,8 +489,8 @@ export function AnimatedContact() {
                           <Badge
                             variant="outline"
                             className={`cursor-pointer transition-all duration-300 ${formData.projectType === type
-                                ? "bg-emerald-100 border-emerald-500 text-emerald-700"
-                                : "hover:bg-emerald-50 hover:border-emerald-300 hover:text-emerald-700"
+                              ? "bg-emerald-100 border-emerald-500 text-emerald-700"
+                              : "hover:bg-emerald-50 hover:border-emerald-300 hover:text-emerald-700"
                               }`}
                             onClick={() => handleProjectTypeSelect(type)}
                           >
@@ -504,8 +530,8 @@ export function AnimatedContact() {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       className={`p-4 rounded-lg flex items-center space-x-2 ${submitStatus === "success"
-                          ? "bg-green-50 text-green-700 border border-green-200"
-                          : "bg-red-50 text-red-700 border border-red-200"
+                        ? "bg-green-50 text-green-700 border border-green-200"
+                        : "bg-red-50 text-red-700 border border-red-200"
                         }`}
                     >
                       {submitStatus === "success" ? (

@@ -1,60 +1,42 @@
-import { type NextRequest, NextResponse } from "next/server"
-import sgMail from "@sendgrid/mail"
+import { type NextRequest, NextResponse } from "next/server";
+import sgMail from "@sendgrid/mail";
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY!)
+const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY?.trim() || "";
+const FROM_EMAIL = process.env.FROM_EMAIL!;
+const BUSINESS_EMAIL = process.env.BUSINESS_EMAIL!;
+
+sgMail.setApiKey(SENDGRID_API_KEY);
 
 export async function POST(request: NextRequest) {
-    try {
-        const body = await request.json()
-        const { firstName, lastName, email, phone, company, projectType, message } = body
+  try {
+    const body = await request.json();
+    const { firstName, lastName, email, message } = body;
 
-        // Basic validation
-        if (!firstName || !lastName || !email || !message) {
-            return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
-        }
-
-        // Email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-        if (!emailRegex.test(email)) {
-            return NextResponse.json({ error: "Invalid email address" }, { status: 400 })
-        }
-
-        const msg = {
-            to: "hello@zenbyte.com", // Your business email
-            from: "noreply@zenbyte.com", // Must be verified in SendGrid
-            subject: `New Contact Form Submission from ${firstName} ${lastName}`,
-            html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #333; border-bottom: 2px solid #10b981; padding-bottom: 10px;">New Contact Form Submission</h2>
-          <div style="background: #f9fafb; padding: 20px; border-radius: 8px; margin: 20px 0;">
-            <p><strong>Name:</strong> ${firstName} ${lastName}</p>
-            <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
-            <p><strong>Phone:</strong> ${phone || "Not provided"}</p>
-            <p><strong>Company:</strong> ${company || "Not provided"}</p>
-            <p><strong>Project Type:</strong> ${projectType}</p>
-          </div>
-          <div style="margin: 20px 0;">
-            <h3 style="color: #333;">Message:</h3>
-            <p style="background: white; padding: 15px; border-left: 4px solid #10b981; margin: 10px 0;">${message}</p>
-          </div>
-          <p style="color: #666; font-size: 12px; margin-top: 30px;">
-            Submitted on: ${new Date().toLocaleString()}
-          </p>
-        </div>
-      `,
-        }
-
-        await sgMail.send(msg)
-
-        return NextResponse.json(
-            {
-                success: true,
-                message: "Thank you for your message! We'll get back to you within 24 hours.",
-            },
-            { status: 200 },
-        )
-    } catch (error) {
-        console.error("Contact form error:", error)
-        return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+    if (!firstName || !lastName || !email || !message) {
+      return NextResponse.json({ error: "Missing fields" }, { status: 400 });
     }
+
+    const emailMessage = {
+      to: BUSINESS_EMAIL,
+      from: FROM_EMAIL,
+      replyTo: email,
+      subject: `New message from ${firstName} ${lastName}`,
+      text: message,
+    };
+
+    // ✅ actually send the email
+    const [sgResponse] = await sgMail.send(emailMessage);
+
+    return NextResponse.json(
+      {
+        success: true,
+        message: "Email queued",
+        sendGridStatus: sgResponse.statusCode,
+      },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    console.error("SendGrid error:", error.response?.body || error);
+    return NextResponse.json({ error: "Email sending failed" }, { status: 500 });
+  }
 }
