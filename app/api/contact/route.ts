@@ -18,7 +18,8 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { firstName, lastName, email, message } = body;
+    debugger
+    const { firstName, lastName, email, message, projectType, phone, company } = body;
 
     if (!firstName || !lastName || !email || !message) {
       return NextResponse.json({ error: "Missing fields" }, { status: 400 });
@@ -29,20 +30,34 @@ export async function POST(request: NextRequest) {
       from: FROM_EMAIL,
       replyTo: email,
       subject: `New message from ${firstName} ${lastName}`,
-      text: message,
+      // text: `
+      //       Name: ${firstName} ${lastName}
+      //       Email: ${email}
+      //       Phone: ${phone || "N/A"}
+      //       Company: ${company || "N/A"}
+      //       Project Type: ${projectType || "N/A"}
+      //       Message:
+      //       ${message}`,
       // cc: "cc@example.com",
       // bcc: "bcc@example.com",
+      html: `
+        <p><strong>Name:</strong> ${firstName} ${lastName}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Phone:</strong> ${phone || "N/A"}</p>
+        <p><strong>Company:</strong> ${company || "N/A"}</p>
+        <p><strong>Project Type:</strong> ${projectType || "N/A"}</p>
+        <p><strong>Message:</strong><br/><strong>${message}</strong></p>`,
     };
 
     // 2. Thank-you email to client
     const thankYouEmail = {
       to: email,
       from: FROM_EMAIL,
-      subject: `Thank you for contacting us, ${firstName + " "+ lastName}!`,
+      subject: `Thank you for contacting us, ${firstName + " " + lastName}!`,
       text: `Hi ${firstName},\n\nThank you for your message. We'll get back to you soon.\n\nBest regards,\nThe Team`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #2563eb;">Hi ${firstName + " "+ lastName},</h2>
+          <h2 style="color: #2563eb;">Hi ${firstName + " " + lastName},</h2>
           <p>Thank you for contacting us! We've received your message and will get back to you within 24-48 hours.</p>
           <p>Here's what you sent us:</p>
           <blockquote style="border-left: 4px solid #ddd; padding-left: 1rem; margin-left: 0;">
