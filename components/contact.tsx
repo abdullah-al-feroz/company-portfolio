@@ -16,6 +16,7 @@ export function Contact() {
             life
           </p>
         </div>
+
         <div className="grid lg:grid-cols-2 gap-12">
           <div className="space-y-8">
             <div className="grid sm:grid-cols-2 gap-6">
@@ -41,7 +42,7 @@ export function Contact() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900">Phone</h3>
-                      <p className="text-gray-600">+1 (555) 123-4567</p>
+                      <p className="text-gray-600">+88 017xxxxxx</p>
                     </div>
                   </div>
                 </CardContent>
