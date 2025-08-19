@@ -282,7 +282,7 @@ export default function ProjectDetails({ params }: { params: { id: string } }) {
                 transition={{ duration: 0.6 }}
             >
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0">
                         <Link href="/#portfolio">
                             <motion.div
                                 className="flex items-center space-x-2 text-gray-600 hover:text-purple-600 transition-colors"
@@ -294,10 +294,10 @@ export default function ProjectDetails({ params }: { params: { id: string } }) {
                             </motion.div>
                         </Link>
 
-                        <div className="flex items-center space-x-4">
+                        <div className="flex flex-col xs:flex-row items-stretch xs:items-center gap-2 xs:gap-4 w-full sm:w-auto">
                             <motion.a
                                 href={project.links.live}
-                                className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg hover:opacity-90 transition-opacity"
+                                className="flex items-center justify-center space-x-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg hover:opacity-90 transition-opacity text-sm sm:text-base"
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                             >
@@ -306,7 +306,7 @@ export default function ProjectDetails({ params }: { params: { id: string } }) {
                             </motion.a>
                             <motion.a
                                 href={project.links.github}
-                                className="flex items-center space-x-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors"
+                                className="flex items-center justify-center space-x-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors text-sm sm:text-base"
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                             >
@@ -318,30 +318,30 @@ export default function ProjectDetails({ params }: { params: { id: string } }) {
                 </div>
             </motion.header>
 
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 relative z-10">
                 {/* Hero Section */}
                 <motion.div
-                    className="text-center mb-16"
+                    className="text-center mb-12 sm:mb-16"
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                 >
                     <motion.div
-                        className="mb-6"
+                        className="mb-4 sm:mb-6"
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
                     >
                         <Badge
                             variant="outline"
-                            className={`px-4 py-2 text-transparent bg-clip-text bg-gradient-to-r ${project.color} border-purple-200 bg-purple-50`}
+                            className={`px-3 sm:px-4 py-1 sm:py-2 text-transparent bg-clip-text bg-gradient-to-r ${project.color} border-purple-200 bg-purple-50 text-sm sm:text-base`}
                         >
                             {project.category}
                         </Badge>
                     </motion.div>
 
                     <motion.h1
-                        className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6"
+                        className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight"
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.6, delay: 0.3 }}
@@ -350,7 +350,7 @@ export default function ProjectDetails({ params }: { params: { id: string } }) {
                     </motion.h1>
 
                     <motion.p
-                        className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed mb-8"
+                        className="text-lg sm:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed mb-6 sm:mb-8 px-4 sm:px-0"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.4 }}
@@ -358,41 +358,40 @@ export default function ProjectDetails({ params }: { params: { id: string } }) {
                         {project.longDescription}
                     </motion.p>
 
-                    {/* Stats */}
                     <motion.div
-                        className="flex flex-wrap justify-center gap-8 mb-12"
+                        className="flex flex-col xs:flex-row flex-wrap justify-center gap-4 sm:gap-8 mb-8 sm:mb-12"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.5 }}
                     >
-                        <div className="flex items-center space-x-2 text-gray-600">
-                            <Users className="w-5 h-5 text-blue-500" />
-                            <span className="font-semibold">{project.stats.users}</span>
-                            <span>Users</span>
+                        <div className="flex items-center justify-center space-x-2 text-gray-600 bg-white/50 backdrop-blur-sm rounded-lg px-4 py-2 sm:bg-transparent sm:backdrop-blur-none">
+                            <Users className="w-4 sm:w-5 h-4 sm:h-5 text-blue-500" />
+                            <span className="font-semibold text-sm sm:text-base">{project.stats.users}</span>
+                            <span className="text-sm sm:text-base">Users</span>
                         </div>
-                        <div className="flex items-center space-x-2 text-gray-600">
-                            <Star className="w-5 h-5 text-yellow-500" />
-                            <span className="font-semibold">{project.stats.rating}</span>
-                            <span>Rating</span>
+                        <div className="flex items-center justify-center space-x-2 text-gray-600 bg-white/50 backdrop-blur-sm rounded-lg px-4 py-2 sm:bg-transparent sm:backdrop-blur-none">
+                            <Star className="w-4 sm:w-5 h-4 sm:h-5 text-yellow-500" />
+                            <span className="font-semibold text-sm sm:text-base">{project.stats.rating}</span>
+                            <span className="text-sm sm:text-base">Rating</span>
                         </div>
-                        <div className="flex items-center space-x-2 text-gray-600">
-                            <Calendar className="w-5 h-5 text-green-500" />
-                            <span className="font-semibold">{project.stats.duration}</span>
-                            <span>Duration</span>
+                        <div className="flex items-center justify-center space-x-2 text-gray-600 bg-white/50 backdrop-blur-sm rounded-lg px-4 py-2 sm:bg-transparent sm:backdrop-blur-none">
+                            <Calendar className="w-4 sm:w-5 h-4 sm:h-5 text-green-500" />
+                            <span className="font-semibold text-sm sm:text-base">{project.stats.duration}</span>
+                            <span className="text-sm sm:text-base">Duration</span>
                         </div>
                     </motion.div>
                 </motion.div>
 
                 {/* Main Image */}
                 <motion.div
-                    className="mb-16"
+                    className="mb-12 sm:mb-16"
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.6 }}
                 >
-                    <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                    <div className="relative rounded-xl sm:rounded-2xl overflow-hidden shadow-xl sm:shadow-2xl">
                         <motion.div
-                            className={`h-2 bg-gradient-to-r ${project.color}`}
+                            className={`h-1 sm:h-2 bg-gradient-to-r ${project.color}`}
                             animate={{
                                 backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
                             }}
@@ -403,19 +402,19 @@ export default function ProjectDetails({ params }: { params: { id: string } }) {
                             }}
                         />
                         <Image
-                            src={`/placeholder_image.png?height=600&width=1200&text=${encodeURIComponent(project.title + " - Main Interface")}`}
+                            src={`/placeholder-rbky2.png?key=s2408&height=600&width=1200&text=${encodeURIComponent(project.title + " - Main Interface")}`}
                             alt={project.title}
                             width={1200}
                             height={600}
                             className="w-full h-auto"
+                            priority
                         />
                     </div>
                 </motion.div>
 
-                {/* Content Grid */}
-                <div className="grid lg:grid-cols-3 gap-12 mb-16">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 mb-12 sm:mb-16">
                     {/* Main Content */}
-                    <div className="lg:col-span-2 space-y-12">
+                    <div className="lg:col-span-2 space-y-8 sm:space-y-12">
                         {/* Technologies */}
                         <motion.section
                             initial={{ opacity: 0, y: 30 }}
@@ -423,15 +422,15 @@ export default function ProjectDetails({ params }: { params: { id: string } }) {
                             viewport={{ once: true }}
                             transition={{ duration: 0.6 }}
                         >
-                            <h2 className="text-3xl font-bold text-gray-900 mb-6 flex items-center">
-                                <Code className="w-8 h-8 mr-3 text-purple-600" />
-                                Technologies Used
+                            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 sm:mb-6 flex flex-col xs:flex-row items-start xs:items-center gap-2 xs:gap-3">
+                                <Code className="w-6 sm:w-8 h-6 sm:h-8 text-purple-600" />
+                                <span>Technologies Used</span>
                             </h2>
-                            <div className="flex flex-wrap gap-3">
+                            <div className="flex flex-wrap gap-2 sm:gap-3">
                                 {project.technologies.map((tech, index) => (
                                     <motion.span
                                         key={tech}
-                                        className={`px-4 py-2 bg-gradient-to-r ${project.color} text-white rounded-full font-medium shadow-lg`}
+                                        className={`px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r ${project.color} text-white rounded-full font-medium shadow-lg text-sm sm:text-base`}
                                         initial={{ opacity: 0, scale: 0.8 }}
                                         whileInView={{ opacity: 1, scale: 1 }}
                                         viewport={{ once: true }}
@@ -451,23 +450,23 @@ export default function ProjectDetails({ params }: { params: { id: string } }) {
                             viewport={{ once: true }}
                             transition={{ duration: 0.6 }}
                         >
-                            <h2 className="text-3xl font-bold text-gray-900 mb-6 flex items-center">
-                                <Zap className="w-8 h-8 mr-3 text-purple-600" />
-                                Key Features
+                            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 sm:mb-6 flex flex-col xs:flex-row items-start xs:items-center gap-2 xs:gap-3">
+                                <Zap className="w-6 sm:w-8 h-6 sm:h-8 text-purple-600" />
+                                <span>Key Features</span>
                             </h2>
-                            <div className="grid sm:grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                                 {project.features.map((feature, index) => (
                                     <motion.div
                                         key={feature}
-                                        className="flex items-center space-x-3 p-4 bg-white/80 backdrop-blur-sm rounded-lg border border-gray-200 shadow-sm"
+                                        className="flex items-center space-x-3 p-3 sm:p-4 bg-white/80 backdrop-blur-sm rounded-lg border border-gray-200 shadow-sm"
                                         initial={{ opacity: 0, x: -20 }}
                                         whileInView={{ opacity: 1, x: 0 }}
                                         viewport={{ once: true }}
                                         transition={{ duration: 0.4, delay: index * 0.1 }}
                                         whileHover={{ scale: 1.02 }}
                                     >
-                                        <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
-                                        <span className="font-medium text-gray-800">{feature}</span>
+                                        <CheckCircle className="w-4 sm:w-5 h-4 sm:h-5 text-green-500 flex-shrink-0" />
+                                        <span className="font-medium text-gray-800 text-sm sm:text-base">{feature}</span>
                                     </motion.div>
                                 ))}
                             </div>
@@ -480,19 +479,19 @@ export default function ProjectDetails({ params }: { params: { id: string } }) {
                             viewport={{ once: true }}
                             transition={{ duration: 0.6 }}
                         >
-                            <h2 className="text-3xl font-bold text-gray-900 mb-6 flex items-center">
-                                <Shield className="w-8 h-8 mr-3 text-purple-600" />
-                                Challenges & Solutions
+                            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 sm:mb-6 flex flex-col xs:flex-row items-start xs:items-center gap-2 xs:gap-3">
+                                <Shield className="w-6 sm:w-8 h-6 sm:h-8 text-purple-600" />
+                                <span>Challenges & Solutions</span>
                             </h2>
-                            <div className="grid md:grid-cols-2 gap-8">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
                                 <Card className="border-0 shadow-lg bg-red-50/50">
-                                    <CardContent className="p-6">
-                                        <h3 className="text-xl font-bold text-red-700 mb-4">Challenges</h3>
-                                        <ul className="space-y-3">
+                                    <CardContent className="p-4 sm:p-6">
+                                        <h3 className="text-lg sm:text-xl font-bold text-red-700 mb-3 sm:mb-4">Challenges</h3>
+                                        <ul className="space-y-2 sm:space-y-3">
                                             {project.challenges.map((challenge, index) => (
                                                 <motion.li
                                                     key={index}
-                                                    className="flex items-start space-x-2 text-gray-700"
+                                                    className="flex items-start space-x-2 text-gray-700 text-sm sm:text-base"
                                                     initial={{ opacity: 0, x: -10 }}
                                                     whileInView={{ opacity: 1, x: 0 }}
                                                     viewport={{ once: true }}
@@ -507,19 +506,19 @@ export default function ProjectDetails({ params }: { params: { id: string } }) {
                                 </Card>
 
                                 <Card className="border-0 shadow-lg bg-green-50/50">
-                                    <CardContent className="p-6">
-                                        <h3 className="text-xl font-bold text-green-700 mb-4">Solutions</h3>
-                                        <ul className="space-y-3">
+                                    <CardContent className="p-4 sm:p-6">
+                                        <h3 className="text-lg sm:text-xl font-bold text-green-700 mb-3 sm:mb-4">Solutions</h3>
+                                        <ul className="space-y-2 sm:space-y-3">
                                             {project.solutions.map((solution, index) => (
                                                 <motion.li
                                                     key={index}
-                                                    className="flex items-start space-x-2 text-gray-700"
+                                                    className="flex items-start space-x-2 text-gray-700 text-sm sm:text-base"
                                                     initial={{ opacity: 0, x: 10 }}
                                                     whileInView={{ opacity: 1, x: 0 }}
                                                     viewport={{ once: true }}
                                                     transition={{ duration: 0.4, delay: index * 0.1 }}
                                                 >
-                                                    <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                                                    <CheckCircle className="w-4 sm:w-5 h-4 sm:h-5 text-green-500 mt-0.5 flex-shrink-0" />
                                                     <span>{solution}</span>
                                                 </motion.li>
                                             ))}
@@ -530,8 +529,7 @@ export default function ProjectDetails({ params }: { params: { id: string } }) {
                         </motion.section>
                     </div>
 
-                    {/* Sidebar */}
-                    <div className="space-y-8">
+                    <div className="space-y-6 sm:space-y-8 order-first lg:order-last">
                         {/* Project Info */}
                         <motion.div
                             initial={{ opacity: 0, x: 30 }}
@@ -540,26 +538,28 @@ export default function ProjectDetails({ params }: { params: { id: string } }) {
                             transition={{ duration: 0.6 }}
                         >
                             <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
-                                <CardContent className="p-6">
-                                    <h3 className="text-xl font-bold text-gray-900 mb-4">Project Info</h3>
-                                    <div className="space-y-4">
+                                <CardContent className="p-4 sm:p-6">
+                                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">Project Info</h3>
+                                    <div className="space-y-3 sm:space-y-4">
                                         <div className="flex items-center justify-between">
-                                            <span className="text-gray-600">Category</span>
-                                            <Badge variant="secondary">{project.category}</Badge>
+                                            <span className="text-gray-600 text-sm sm:text-base">Category</span>
+                                            <Badge variant="secondary" className="text-xs sm:text-sm">
+                                                {project.category}
+                                            </Badge>
                                         </div>
                                         <div className="flex items-center justify-between">
-                                            <span className="text-gray-600">Duration</span>
-                                            <span className="font-medium">{project.stats.duration}</span>
+                                            <span className="text-gray-600 text-sm sm:text-base">Duration</span>
+                                            <span className="font-medium text-sm sm:text-base">{project.stats.duration}</span>
                                         </div>
                                         <div className="flex items-center justify-between">
-                                            <span className="text-gray-600">Users</span>
-                                            <span className="font-medium">{project.stats.users}</span>
+                                            <span className="text-gray-600 text-sm sm:text-base">Users</span>
+                                            <span className="font-medium text-sm sm:text-base">{project.stats.users}</span>
                                         </div>
                                         <div className="flex items-center justify-between">
-                                            <span className="text-gray-600">Rating</span>
+                                            <span className="text-gray-600 text-sm sm:text-base">Rating</span>
                                             <div className="flex items-center space-x-1">
-                                                <Star className="w-4 h-4 text-yellow-500 fill-current" />
-                                                <span className="font-medium">{project.stats.rating}</span>
+                                                <Star className="w-3 sm:w-4 h-3 sm:h-4 text-yellow-500 fill-current" />
+                                                <span className="font-medium text-sm sm:text-base">{project.stats.rating}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -575,20 +575,20 @@ export default function ProjectDetails({ params }: { params: { id: string } }) {
                             transition={{ duration: 0.6, delay: 0.2 }}
                         >
                             <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
-                                <CardContent className="p-6">
-                                    <h3 className="text-xl font-bold text-gray-900 mb-4">Responsive Design</h3>
-                                    <div className="space-y-4">
-                                        <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-                                            <Monitor className="w-5 h-5 text-blue-500" />
-                                            <span className="text-gray-700">Desktop Optimized</span>
+                                <CardContent className="p-4 sm:p-6">
+                                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">Responsive Design</h3>
+                                    <div className="space-y-3 sm:space-y-4">
+                                        <div className="flex items-center space-x-3 p-2 sm:p-3 bg-gray-50 rounded-lg">
+                                            <Monitor className="w-4 sm:w-5 h-4 sm:h-5 text-blue-500" />
+                                            <span className="text-gray-700 text-sm sm:text-base">Desktop Optimized</span>
                                         </div>
-                                        <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-                                            <Tablet className="w-5 h-5 text-green-500" />
-                                            <span className="text-gray-700">Tablet Friendly</span>
+                                        <div className="flex items-center space-x-3 p-2 sm:p-3 bg-gray-50 rounded-lg">
+                                            <Tablet className="w-4 sm:w-5 h-4 sm:h-5 text-green-500" />
+                                            <span className="text-gray-700 text-sm sm:text-base">Tablet Friendly</span>
                                         </div>
-                                        <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-                                            <Smartphone className="w-5 h-5 text-purple-500" />
-                                            <span className="text-gray-700">Mobile Ready</span>
+                                        <div className="flex items-center space-x-3 p-2 sm:p-3 bg-gray-50 rounded-lg">
+                                            <Smartphone className="w-4 sm:w-5 h-4 sm:h-5 text-purple-500" />
+                                            <span className="text-gray-700 text-sm sm:text-base">Mobile Ready</span>
                                         </div>
                                     </div>
                                 </CardContent>
@@ -599,21 +599,21 @@ export default function ProjectDetails({ params }: { params: { id: string } }) {
 
                 {/* Gallery */}
                 <motion.section
-                    className="mb-16"
+                    className="mb-12 sm:mb-16"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
                 >
-                    <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center flex items-center justify-center">
-                        <Play className="w-8 h-8 mr-3 text-purple-600" />
-                        Project Gallery
+                    <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 sm:mb-8 text-center flex flex-col xs:flex-row items-center justify-center gap-2 xs:gap-3">
+                        <Play className="w-6 sm:w-8 h-6 sm:h-8 text-purple-600" />
+                        <span>Project Gallery</span>
                     </h2>
-                    <div className="grid md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                         {project.gallery.map((image, index) => (
                             <motion.div
                                 key={index}
-                                className="relative rounded-xl overflow-hidden shadow-lg group"
+                                className="relative rounded-lg sm:rounded-xl overflow-hidden shadow-lg group"
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 whileInView={{ opacity: 1, scale: 1 }}
                                 viewport={{ once: true }}
@@ -625,7 +625,7 @@ export default function ProjectDetails({ params }: { params: { id: string } }) {
                                     alt={`${project.title} screenshot ${index + 1}`}
                                     width={600}
                                     height={400}
-                                    className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
+                                    className="w-full h-48 sm:h-64 object-cover transition-transform duration-300 group-hover:scale-110"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                             </motion.div>
@@ -635,39 +635,38 @@ export default function ProjectDetails({ params }: { params: { id: string } }) {
 
                 {/* Testimonial */}
                 <motion.section
-                    className="mb-16"
+                    className="mb-12 sm:mb-16"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
                 >
-                    {/* <Card className={`border-0 shadow-2xl bg-gradient-to-r ${project.color} text-white overflow-hidden`}> */}
                     <Card className="border-0 shadow-lg bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 overflow-hidden">
-                        <CardContent className="p-8 md:p-12 relative">
+                        <CardContent className="p-6 sm:p-8 md:p-12 relative">
                             <motion.div
                                 className="absolute top-4 right-4"
                                 animate={{ rotate: 360 }}
                                 transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
                             >
-                                <Award className="w-12 h-12 opacity-20" />
+                                <Award className="w-8 sm:w-12 h-8 sm:h-12 opacity-20" />
                             </motion.div>
 
                             <div className="relative z-10">
-                                <h2 className="text-3xl font-bold mb-6 flex items-center">
-                                    <TrendingUp className="w-8 h-8 mr-3" />
-                                    Client Testimonial
+                                <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 flex flex-col xs:flex-row items-start xs:items-center gap-2 xs:gap-3">
+                                    <TrendingUp className="w-6 sm:w-8 h-6 sm:h-8" />
+                                    <span>Client Testimonial</span>
                                 </h2>
-                                <blockquote className="text-xl md:text-2xl font-medium mb-6 leading-relaxed">
+                                <blockquote className="text-lg sm:text-xl md:text-2xl font-medium mb-4 sm:mb-6 leading-relaxed">
                                     "{project.testimonial.text}"
                                 </blockquote>
-                                <div className="flex items-center space-x-4">
-                                    <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                                        <span className="text-lg font-bold">{project.testimonial.author.charAt(0)}</span>
+                                <div className="flex flex-col xs:flex-row items-start xs:items-center gap-3 xs:gap-4">
+                                    <div className="w-10 sm:w-12 h-10 sm:h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                                        <span className="text-base sm:text-lg font-bold">{project.testimonial.author.charAt(0)}</span>
                                     </div>
                                     <div>
-                                        <div className="font-semibold">{project.testimonial.author}</div>
-                                        <div className="opacity-90">{project.testimonial.role}</div>
-                                        <div className="opacity-75 text-sm">{project.testimonial.company}</div>
+                                        <div className="font-semibold text-sm sm:text-base">{project.testimonial.author}</div>
+                                        <div className="opacity-90 text-sm sm:text-base">{project.testimonial.role}</div>
+                                        <div className="opacity-75 text-xs sm:text-sm">{project.testimonial.company}</div>
                                     </div>
                                 </div>
                             </div>
@@ -684,30 +683,32 @@ export default function ProjectDetails({ params }: { params: { id: string } }) {
                     transition={{ duration: 0.6 }}
                 >
                     <Card className="border-0 shadow-xl bg-white/90 backdrop-blur-sm">
-                        <CardContent className="p-8 md:p-12">
-                            <h2 className="text-3xl font-bold text-gray-900 mb-4">Ready to Start Your Project?</h2>
-                            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                        <CardContent className="p-6 sm:p-8 md:p-12">
+                            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">
+                                Ready to Start Your Project?
+                            </h2>
+                            <p className="text-lg sm:text-xl text-gray-600 mb-6 sm:mb-8 max-w-2xl mx-auto">
                                 Let's discuss how we can bring your vision to life with innovative solutions and cutting-edge
                                 technology.
                             </p>
-                            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                                 <Link href="/#contact">
-                                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full sm:w-auto">
                                         <Button
                                             size="lg"
-                                            className="bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg hover:shadow-xl transition-all duration-300"
+                                            className="bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 w-full sm:w-auto"
                                         >
-                                            <Zap className="w-5 h-5 mr-2" />
+                                            <Zap className="w-4 sm:w-5 h-4 sm:h-5 mr-2" />
                                             Get Started Today
                                         </Button>
                                     </motion.div>
                                 </Link>
                                 <Link href="/#portfolio">
-                                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full sm:w-auto">
                                         <Button
                                             size="lg"
                                             variant="outline"
-                                            className="border-2 border-purple-600 text-purple-600 hover:bg-purple-50 bg-transparent"
+                                            className="border-2 border-purple-600 text-purple-600 hover:bg-purple-50 bg-transparent w-full sm:w-auto"
                                         >
                                             View More Projects
                                         </Button>
